@@ -13,7 +13,7 @@ function Login({ onLogin }) {
     e.preventDefault();
     try {
       // Back-end login API ni call chestunnam
-      const response = await axios.post('http://localhost:3001/login', {
+      const response = await axios.post('https://chat-room-server-4gu1.onrender.com/login', {
         username: username,
         password: password,
       });

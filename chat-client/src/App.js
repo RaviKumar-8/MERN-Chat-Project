@@ -15,7 +15,7 @@ import Register from './Register';
 
 // Socket connection ni ikkada initialize cheddam
 // Kani connect() ni chat component lo cheddam
-const socket = io('http://localhost:3001');
+const socket = io('https://chat-room-server-4gu1.onrender.com');
 
 function App() {
   // User login ayyara leda ani 'localStorage' lo check cheddam

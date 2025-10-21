@@ -16,7 +16,7 @@ function Register() {
     }
     try {
       // Back-end register API ni call chestunnam
-      const response = await axios.post('http://localhost:3001/register', {
+      const response = await axios.post('https://chat-room-server-4gu1.onrender.com/register', {
         username: username,
         password: password,
       });
