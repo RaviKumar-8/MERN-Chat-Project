@@ -30,7 +30,10 @@ mongoose.connect(DB_CONNECTION_STRING)
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // Mee React app ekkada run avtundo aa URL
+    origin: [
+      "http://localhost:3000",
+      "https://mern-chat-project-amber.vercel.app"
+    ], // Mee React app ekkada run avtundo aa URL
     methods: ["GET", "POST"]
   }
 });
