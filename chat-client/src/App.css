@@ -132,3 +132,14 @@ button:hover {
   border-radius: 0;
   border-bottom-right-radius: 5px;
 }
+
+.form-row {
+  display: flex;
+  flex-direction: column; /* <-- 'column' ga marchandi */
+  gap: 10px; 
+  width: 100%;
+}
+
+.form-row input {
+  flex-grow: 1; /* Inputs available space antha teesukuntayi */
+}
