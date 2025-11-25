@@ -98,6 +98,10 @@ function JoinRoomPage({ socket, username }) {
   const [room, setRoom] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "RoomChat";
+  }, []);
+
   const joinRoom = () => {
     if (room !== '') {
       // Socket event emi pampanavasaram ledu, direct ga URL ki veldam

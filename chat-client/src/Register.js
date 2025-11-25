@@ -1,3 +1,4 @@
+import React, { useState, useEffect} from 'react';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // 'useNavigate' ni import cheddam
@@ -7,6 +8,10 @@ function Register() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Navigation kosam
+
+  useEffect(() => {
+    document.title = "RoomChat - Register";
+  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault(); // Form submit avvakunda aaputundi

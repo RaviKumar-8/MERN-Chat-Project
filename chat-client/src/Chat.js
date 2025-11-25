@@ -7,6 +7,9 @@ function Chat({ socket, username, room }) {
   const [messageList, setMessageList] = useState([]);
   const navigate = useNavigate(); // 2. Initialize navigate
 
+  useEffect(() => {
+    document.title = "RoomChat - In Room";
+  }, []);
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
