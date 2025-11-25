@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 
 function Chat({ socket, username, room }) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const navigate = useNavigate(); // 2. Initialize navigate
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -23,30 +25,35 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    // Handler for receiving live messages
     const messageHandler = (data) => {
       setMessageList((list) => [...list, data]);
     };
-
-    // Handler for loading old messages
     const oldMessagesHandler = (data) => {
-      setMessageList(data); // List ni set cheyali, add cheyakudadu
+      setMessageList(data);
     };
 
-    // Listeners ni setup cheyadam
     socket.on("receive_message", messageHandler);
-    socket.on("load_old_messages", oldMessagesHandler); // Kotta listener
+    socket.on("load_old_messages", oldMessagesHandler);
 
-    // Clean up function
     return () => {
       socket.off("receive_message", messageHandler);
-      socket.off("load_old_messages", oldMessagesHandler); // Kotta listener cleanup
+      socket.off("load_old_messages", oldMessagesHandler);
+      // Room nundi vellipoyetappudu server ki cheppadam
+      socket.emit("leave_room", room);
     };
-  }, [socket]); // Dependency array lo marpu ledu
+  }, [socket, room]);
+
+  // 3. Leave Room Function
+  const leaveRoom = () => {
+    navigate('/chat'); // Join Room page ki teesukeltundi
+    // Note: useEffect lo unna 'return' function automatic ga run ayyi server nundi disconnect chestundi.
+  };
 
   return (
     <div className="chat-window">
       <div className="chat-header">
+        {/* 4. Leave Button Add Chesam */}
+        <button onClick={leaveRoom} className="leave-btn">⬅️</button>
         <p>Live Chat - Room: {room}</p>
       </div>
       <div className="chat-body">

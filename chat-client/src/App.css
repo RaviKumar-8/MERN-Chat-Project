@@ -55,13 +55,41 @@ button:hover {
   flex-direction: column;
 }
 
+/* Chat Header ni Flex ga marchandi, items pakkana pakkana ravali */
 .chat-header {
   background: #263238;
-  color: white;
-  padding: 10px;
+  height: 45px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  display: flex; /* Kotta Line */
+  align-items: center; /* Center lo undadaniki */
+  padding: 0 10px; /* Gap kosam */
+  color: white; /* Text color */
+}
+
+.chat-header p {
+  margin: 0;
+  display: block;
+  padding: 0 10px;
   font-weight: bold;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  font-family: sans-serif;
+  flex-grow: 1; /* Text ni madhyalo/right ki push cheyadaniki */
+  text-align: center; /* Title Center lo undali */
+}
+
+/* Kotta Leave Button Style */
+.leave-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.leave-btn:hover {
+  transform: scale(1.1); /* Hover cheste konchem peddadi avtundi */
 }
 
 /* Chat body ki fixed height ivvali, appude scroll avtundi */
