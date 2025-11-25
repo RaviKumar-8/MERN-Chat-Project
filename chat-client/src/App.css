@@ -64,13 +64,31 @@ button:hover {
   border-top-right-radius: 5px;
 }
 
+/* Chat body ki fixed height ivvali, appude scroll avtundi */
 .chat-body {
-  flex-grow: 1;
-  padding: 10px;
-  overflow-y: auto;
-  background: #ece5dd;
-  display: flex;
-  flex-direction: column;
+  height: calc(100% - 100px); /* Header & Footer height poga migilindi */
+  border: 1px solid #263238;
+  background: #fff;
+  position: relative;
+}
+
+/* ScrollToBottom component create chese class idi */
+.message-container-scroll {
+  width: 100%;
+  height: 100%; /* Parent height ni purthiga teesukovali */
+  overflow-y: scroll; /* Scroll bar ravali */
+  overflow-x: hidden;
+}
+
+/* Scroll bar ni andamga cheyadaniki (Optional) */
+.message-container-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.message-container-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.message-container-scroll::-webkit-scrollbar-thumb {
+  background: #888;
 }
 
 .message-container {
