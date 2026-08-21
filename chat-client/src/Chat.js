@@ -83,7 +83,15 @@ function Chat({ socket, username, room }) {
     socket.on("room_users_update", usersUpdateHandler);
 
     if (username !== "" && room !== "") {
-      socket.emit("join_room", { username: username, room: room });
+      // 1. కనెక్షన్ ఆల్రెడీ ఉంటే డైరెక్ట్ గా జాయిన్ అవ్వు
+      if (socket.connected) {
+        socket.emit("join_room", { username, room });
+      } else {
+        // 2. ఒకవేళ Render కి కనెక్ట్ అవ్వడానికి టైమ్ పడితే, కనెక్ట్ అయ్యాక జాయిన్ అవ్వు
+        socket.on("connect", () => {
+          socket.emit("join_room", { username, room });
+        });
+      }
     }
 
     // --- క్లీన్ అప్ (ఆఫ్ చేయడం) ---
