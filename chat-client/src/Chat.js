@@ -71,8 +71,9 @@ function Chat({ socket, username, room }) {
       );
     };
     
-    // 4. రూమ్ లో యూజర్స్ మారినప్పుడు
+    // 4. రూమ్ లో యూజర్స్ మారినప్పుడు (లాగ్ తో సహా)
     const usersUpdateHandler = (users) => {
+      console.log("Live Users Array:", users); 
       setRoomUsers(users); 
     };
 
@@ -82,17 +83,19 @@ function Chat({ socket, username, room }) {
     socket.on("message_status_update", statusUpdateHandler); 
     socket.on("room_users_update", usersUpdateHandler);
 
-    if (username !== "" && room !== "") {
-      // 1. కనెక్షన్ ఆల్రెడీ ఉంటే డైరెక్ట్ గా జాయిన్ అవ్వు
-      if (socket.connected) {
+    // --- 5. కనెక్షన్ పోయి మళ్ళీ వచ్చినా ఆటోమేటిక్ గా జాయిన్ అయ్యే లాజిక్ ---
+    const joinUserToRoom = () => {
+      if (username !== "" && room !== "") {
+        console.log("Joining room again...");
         socket.emit("join_room", { username, room });
-      } else {
-        // 2. ఒకవేళ Render కి కనెక్ట్ అవ్వడానికి టైమ్ పడితే, కనెక్ట్ అయ్యాక జాయిన్ అవ్వు
-        socket.on("connect", () => {
-          socket.emit("join_room", { username, room });
-        });
       }
-    }
+    };
+
+    // కాంపోనెంట్ లోడ్ అవ్వగానే ఫస్ట్ టైమ్ జాయిన్ అవుతాం
+    joinUserToRoom(); 
+    
+    // ఒకవేళ Render సర్వర్ స్లీప్ మోడ్ లోకి వెళ్లి మళ్ళీ ఆన్ అయితే, వెంటనే జాయిన్ అవుతాం
+    socket.on("connect", joinUserToRoom); 
 
     // --- క్లీన్ అప్ (ఆఫ్ చేయడం) ---
     return () => {
@@ -100,6 +103,7 @@ function Chat({ socket, username, room }) {
       socket.off("previous_messages", previousMessagesHandler);
       socket.off("message_status_update", statusUpdateHandler);
       socket.off("room_users_update", usersUpdateHandler);
+      socket.off("connect", joinUserToRoom);
     };
   }, [socket, username, room]);
 
