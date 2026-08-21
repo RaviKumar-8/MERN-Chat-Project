@@ -129,19 +129,17 @@ function JoinRoomPage({ socket, username }) {
 // (URL nundi room ID teesukovadaniki)
 
 function ChatPage({ socket, username }) {
-  const { room } = useParams(); // URL nundi 'room' ID ni teesukuntundi
+  const { room } = useParams();
 
   useEffect(() => {
-    // User ee page ki vachinappudu server ki "join_room" event pampali
     if (socket && room) {
-      socket.emit("join_room", room);
+      // ✅ ఇక్కడ బ్రాకెట్స్ పెట్టి 'username' మరియు 'room' రెండూ పంపుతున్నాం
+      socket.emit("join_room", { username: username, room: room }); 
       console.log(`User ${username} joining room ${room}`);
     }
   }, [socket, room, username]);
 
-
   return (
-    // Manam already create chesina 'Chat' component ni ikkada vadutunnam
     <Chat socket={socket} username={username} room={room} />
   );
 }

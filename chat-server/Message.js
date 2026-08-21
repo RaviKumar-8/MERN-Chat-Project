@@ -1,28 +1,12 @@
 const mongoose = require('mongoose');
 
-const MessageSchema = new mongoose.Schema({
-  room: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: String,
-    required: true,
-  },
-  message: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: String, // Manam simple ga string save chestunnam
-    required: true,
-  },
-  // Professional projects lo Date type vadataru
-  // timestamp: {
-  //   type: Date,
-  //   default: Date.now,
-  // }
+const messageSchema = new mongoose.Schema({
+  messageId: { type: String }, // కొత్తగా యాడ్ చేసాం
+  room: { type: String, required: true },
+  author: { type: String, required: true },
+  message: { type: String, required: true },
+  time: { type: String, required: true },
+  status: { type: String, default: "sent" } // కొత్తగా యాడ్ చేసాం
 });
 
-const Message = mongoose.model("Message", MessageSchema);
-module.exports = Message;
+module.exports = mongoose.model('Message', messageSchema);
