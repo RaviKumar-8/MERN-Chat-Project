@@ -17,7 +17,7 @@ app.use(express.json());
 // Security Note: Hardcode చేసిన లింక్ బదులు process.env వాడటం మంచిది. 
 const DB_CONNECTION_STRING = process.env.MONGO_URI || "mongodb+srv://testuser123:RaviChat1234@cluster0.2rrmy6o.mongodb.net/chat-app?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(DB_CONNECTION_STRING)
+mongoose.connect(process.env.DB_CONNECTION_STRING)
   .then(() => {
     console.log("MongoDB Connected Successfully");
   })
