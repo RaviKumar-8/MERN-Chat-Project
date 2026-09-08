@@ -7,6 +7,10 @@ function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  
+  // 👉 1. కొత్తగా లోడింగ్ కోసం ఒక స్టేట్ క్రియేట్ చేశాం
+  const [isLoading, setIsLoading] = useState(false); 
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +19,10 @@ function Login({ onLogin }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // 👉 2. బటన్ నొక్కగానే ఇక్కడ లోడింగ్ స్టార్ట్ అవుతుంది
+    setIsLoading(true); 
+
     try {
       // Back-end login API ni call chestunnam
       const response = await axios.post('https://chat-room-server-4gu1.onrender.com/login', {
@@ -35,6 +43,9 @@ function Login({ onLogin }) {
 
     } catch (error) {
       setMessage(error.response.data.message);
+    } finally {
+      // 👉 3. సక్సెస్ అయినా/ఎర్రర్ వచ్చినా చివర్లో లోడింగ్ ఆగిపోవాలి
+      setIsLoading(false); 
     }
   };
 
@@ -57,7 +68,19 @@ function Login({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit">Login</button>
+          
+          {/* 👉 4. ఇక్కడ బటన్ డిజైన్ మార్చాం */}
+          <button 
+            type="submit" 
+            disabled={isLoading}
+            style={{ 
+              opacity: isLoading ? 0.7 : 1, 
+              cursor: isLoading ? 'not-allowed' : 'pointer' 
+            }}
+          >
+            {isLoading ? 'Loading...' : 'Login'}
+          </button>
+          
         </div>
         {message && <p style={{ marginTop: '10px' }}>{message}</p>}
       </form>
